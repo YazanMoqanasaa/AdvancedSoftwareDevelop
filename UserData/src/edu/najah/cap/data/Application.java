@@ -3,6 +3,9 @@ package edu.najah.cap.data;
 import edu.najah.cap.activity.IUserActivityService;
 import edu.najah.cap.activity.UserActivity;
 import edu.najah.cap.activity.UserActivityService;
+import edu.najah.cap.exceptions.BadRequestException;
+import edu.najah.cap.exceptions.NotFoundException;
+import edu.najah.cap.exceptions.SystemBusyException;
 import edu.najah.cap.exceptions.Util;
 import edu.najah.cap.iam.IUserService;
 import edu.najah.cap.iam.UserProfile;
@@ -16,8 +19,8 @@ import edu.najah.cap.posts.Post;
 import edu.najah.cap.posts.PostService;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
 
 public class Application {
 
@@ -28,7 +31,7 @@ public class Application {
 
     private static String loginUserName;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SystemBusyException, NotFoundException, BadRequestException {
         generateRandomData();
         Instant start = Instant.now();
         System.out.println("Application Started: " + start);
@@ -38,15 +41,27 @@ public class Application {
         String userName = scanner.nextLine();
         setLoginUserName(userName);
         //TODO Your application starts here. Do not Change the existing code
+        try {
+            // Check if the user exists
+            userService.getUser(userName);
 
+            // Retrieve user activities if the user exists
+            List<UserActivity> userActivities = userActivityService.getUserActivity(userName);
 
-
+            // Export user profile and activities to PDF
+            UserProfile userProfile = userService.getUser(userName);
+            PDFExporter pdfExporter = new PDFExporter();
+            pdfExporter.exportUserProfileAndActivitiesToPDF(userProfile, userActivities);
+        } catch (NotFoundException e) {
+            System.err.println("User not found. Please enter a valid username.");
+        }
 
 
         //TODO Your application ends here. Do not Change the existing code
-        Instant end = Instant.now();
-        System.out.println("Application Ended: " + end);
-    }
+    Instant end = Instant.now();
+        System.out.println("Application Ended: "+end);
+}
+
 
 
     private static void generateRandomData() {
