@@ -43,31 +43,37 @@ public class Application {
         //TODO Your application starts here. Do not Change the existing code
         String outputPath = "C:\\Users\\Yazan\\Desktop\\UserData\\ExportPDF";
 
+
+
+        // existing code...
         try {
-            // Check if the user exists
             UserProfile userProfile = userService.getUser(userName);
 
+
+           ExportUserProfile pdfExporterUserProfile = new ExportUserProfile();
+            pdfExporterUserProfile.exportUserProfileToPDF(userProfile, outputPath);
             // Retrieve user activities if the user exists
             List<UserActivity> userActivities = userActivityService.getUserActivity(userName);
 
             // Export user profile and activities to PDF
-            PDFExporterProfileAndActivity pdfExporter = new PDFExporterProfileAndActivity();
-            pdfExporter.exportUserProfileAndActivitiesToPDF(userProfile, userActivities, outputPath);
+            PDFExporterActivity pdfExporter = new PDFExporterActivity();
+            pdfExporter.exportUserProfileAndActivitiesToPDF(userProfile, userActivities,outputPath);
 
             // Retrieve user posts if the user exists
             List<Post> userPosts = postService.getPosts(userName);
 
             // Export user posts to PDF
             ExportUserPosts exportUserPosts = new ExportUserPosts();
-            exportUserPosts.exportUserPostsToPDF(userName, userPosts, outputPath);
+            exportUserPosts.exportUserPostsToPDF(userName, userPosts,outputPath);
 
             // Retrieve user payments if the user exists
             List<Transaction> userTransactions = paymentService.getTransactions(userName);
 
             // Export user payments to PDF
             ExportUserPayments exportUserPayments = new ExportUserPayments();
-            exportUserPayments.exportUserPaymentsToPDF(userName, userTransactions, outputPath);
+            exportUserPayments.exportUserPaymentsToPDF(userName, userTransactions,outputPath);
 
+           
         } catch (NotFoundException e) {
             System.err.println("User not found. Please enter a valid username.");
         }

@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class UserService implements IUserService {
 
-    private static final Map<String, UserProfile> users = new HashMap<>();
+    public static final Map<String, UserProfile> users = new HashMap<>();
 
     @Override
     public void addUser(UserProfile user) {
