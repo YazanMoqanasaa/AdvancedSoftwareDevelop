@@ -41,8 +41,12 @@ public class Application {
         String userName = scanner.nextLine();
         setLoginUserName(userName);
         //TODO Your application starts here. Do not Change the existing code
-        String outputPath = "C:\\Users\\Yazan\\Desktop\\UserData\\ExportPDF";
+        String outputPath = "C:\\Users\\abood ghanayem\\Desktop\\all\\scivuty\\AdvancedSoftwareDevelop-working_space\\ExportPDF";
 
+
+
+        PDFZipCreator zipCreator = new PDFZipCreator();
+        zipCreator.createZipFile(userName, outputPath);
 
 
         // existing code...
