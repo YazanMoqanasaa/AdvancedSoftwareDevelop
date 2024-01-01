@@ -1,7 +1,7 @@
 package edu.najah.cap.data.Export;
 
 public class PDFExporterFactory {
-    public PDFExporter createExporter(String type) {
+    public IPDFExporter createExporter(String type) {
             if ("UserProfile".equalsIgnoreCase(type)) {
                 return new UserProfilePDFExporter();
             } else if ("UserActivity".equalsIgnoreCase(type)) {

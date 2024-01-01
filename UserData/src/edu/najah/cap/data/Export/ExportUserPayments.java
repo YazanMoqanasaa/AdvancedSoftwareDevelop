@@ -14,7 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
-public class ExportUserPayments implements PDFExporter {
+public class ExportUserPayments implements IPDFExporter {
 
 
     @Override

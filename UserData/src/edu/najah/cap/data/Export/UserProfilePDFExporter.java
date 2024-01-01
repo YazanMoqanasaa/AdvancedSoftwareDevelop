@@ -14,7 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-public class UserProfilePDFExporter implements PDFExporter {
+public class UserProfilePDFExporter implements IPDFExporter {
 
     @Override
     public void exportToPDF(UserProfile userProfile, List<UserActivity> activities, List<Post> posts, List<Transaction> transactions, String outputPath) {
