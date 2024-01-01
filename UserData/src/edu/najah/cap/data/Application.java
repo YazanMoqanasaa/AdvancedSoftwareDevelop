@@ -41,6 +41,7 @@ public class Application {
         String userName = scanner.nextLine();
         setLoginUserName(userName);
         //TODO Your application starts here. Do not Change the existing code
+<<<<<<< HEAD
         String outputPath = "C:\\Users\\Yazan\\Desktop\\UserData\\ExportPDF";
         //****************************
 
@@ -52,6 +53,19 @@ public class Application {
         System.out.println("3. Export User Data");
         System.out.println("4. Convert a zip file");
         System.out.println("5. Exit");
+=======
+        String outputPath = "C:\\Users\\abood ghanayem\\Desktop\\all\\scivuty\\AdvancedSoftwareDevelop-working_space\\ExportPDF";
+
+
+
+        PDFZipCreator zipCreator = new PDFZipCreator();
+        zipCreator.createZipFile(userName, outputPath);
+
+
+        // existing code...
+        try {
+            UserProfile userProfile = userService.getUser(userName);
+>>>>>>> 714e5ca4ba0e23b782e51c905e678fd46a8bc2b1
 
         int choice = scanner.nextInt();
         UserProfile userProfile = userService.getUser(userName);
