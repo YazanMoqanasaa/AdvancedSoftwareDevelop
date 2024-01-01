@@ -6,7 +6,7 @@ import java.util.zip.ZipOutputStream;
 
 public class PDFZipCreator {
 
-    public void createZipFile(String userName, String outputPath) {
+    public void createZipFile(String userName, String outputPath) throws IOException {
         String[] pdfFiles = {
                 outputPath + File.separator + userName + "_payments.pdf",
                 outputPath + File.separator + userName + "_posts.pdf",
@@ -18,29 +18,30 @@ public class PDFZipCreator {
 
         byte[] buffer = new byte[1024];
 
-        try {
-            FileOutputStream fos = new FileOutputStream(zipFileName);
-            ZipOutputStream zos = new ZipOutputStream(fos);
+        File zipFile = new File(zipFileName);
+        if (zipFile.exists()) {
+            throw new IOException("ZIP file already exists.");
+        }
+
+        try (FileOutputStream fos = new FileOutputStream(zipFileName);
+             ZipOutputStream zos = new ZipOutputStream(fos)) {
 
             for (String pdfFile : pdfFiles) {
                 File file = new File(pdfFile);
                 if (file.exists()) {
-                    FileInputStream fis = new FileInputStream(pdfFile);
-                    zos.putNextEntry(new ZipEntry(file.getName()));
+                    try (FileInputStream fis = new FileInputStream(pdfFile)) {
+                        zos.putNextEntry(new ZipEntry(file.getName()));
 
-                    int length;
-                    while ((length = fis.read(buffer)) > 0) {
-                        zos.write(buffer, 0, length);
+                        int length;
+                        while ((length = fis.read(buffer)) > 0) {
+                            zos.write(buffer, 0, length);
+                        }
                     }
-
                     zos.closeEntry();
-                    fis.close();
                 }
             }
-
-            zos.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException("Error creating ZIP file: " + e.getMessage());
         }
     }
 }

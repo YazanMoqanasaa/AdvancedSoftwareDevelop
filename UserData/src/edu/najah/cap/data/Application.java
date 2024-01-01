@@ -3,6 +3,11 @@ package edu.najah.cap.data;
 import edu.najah.cap.activity.IUserActivityService;
 import edu.najah.cap.activity.UserActivity;
 import edu.najah.cap.activity.UserActivityService;
+import edu.najah.cap.data.Deletion.DeletionStrategy;
+import edu.najah.cap.data.Deletion.HardDelete;
+import edu.najah.cap.data.Deletion.SoftDelete;
+import edu.najah.cap.data.Export.IPDFExporter;
+import edu.najah.cap.data.Export.PDFExporterFactory;
 import edu.najah.cap.exceptions.BadRequestException;
 import edu.najah.cap.exceptions.NotFoundException;
 import edu.najah.cap.exceptions.SystemBusyException;
@@ -18,6 +23,7 @@ import edu.najah.cap.posts.IPostService;
 import edu.najah.cap.posts.Post;
 import edu.najah.cap.posts.PostService;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
 import java.util.Scanner;
@@ -31,7 +37,7 @@ public class Application {
 
     private static String loginUserName;
 
-    public static void main(String[] args) throws SystemBusyException, NotFoundException, BadRequestException {
+    public static void main(String[] args) throws SystemBusyException, NotFoundException, BadRequestException, IOException {
         generateRandomData();
         Instant start = Instant.now();
         System.out.println("Application Started: " + start);
@@ -41,11 +47,8 @@ public class Application {
         String userName = scanner.nextLine();
         setLoginUserName(userName);
         //TODO Your application starts here. Do not Change the existing code
-<<<<<<< HEAD
         String outputPath = "C:\\Users\\Yazan\\Desktop\\UserData\\ExportPDF";
         //****************************
-
-
 
         System.out.println("Choose an action:");
         System.out.println("1. Soft Delete User");
@@ -53,67 +56,66 @@ public class Application {
         System.out.println("3. Export User Data");
         System.out.println("4. Convert a zip file");
         System.out.println("5. Exit");
-=======
-        String outputPath = "C:\\Users\\abood ghanayem\\Desktop\\all\\scivuty\\AdvancedSoftwareDevelop-working_space\\ExportPDF";
-
-
-
-        PDFZipCreator zipCreator = new PDFZipCreator();
-        zipCreator.createZipFile(userName, outputPath);
-
-
-        // existing code...
-        try {
-            UserProfile userProfile = userService.getUser(userName);
->>>>>>> 714e5ca4ba0e23b782e51c905e678fd46a8bc2b1
 
         int choice = scanner.nextInt();
         UserProfile userProfile = userService.getUser(userName);
+        List<UserActivity> userActivities = userActivityService.getUserActivity(userName);
+        List<Post> userPosts = postService.getPosts(userName);
+        List<Transaction> userTransactions = paymentService.getTransactions(userName);
+
+        PDFExporterFactory exporterFactory = new PDFExporterFactory();
 
         switch (choice) {
             case 1:
-                SoftDelete.softDeleteUser(userName);
-
-                // Check if the username has been deleted
-                if (SoftDelete.isUsernameDeleted(userName)) {
-                    System.out.println("User data has been soft-deleted.");
-
-                    // Export user profile before deletion
-                    SoftDelete.exportUserProfileToPDF(userProfile);
+                if (userProfile != null && !SoftDelete.isUsernameDeleted(userName)) {
+                    DeletionStrategy softDeleteStrategy = new SoftDelete();
+                    softDeleteStrategy.delete(userName, userProfile);
+                    SoftDelete.exportUserProfileToPDF(userProfile); // Export user profile before deletion
                 } else {
                     System.out.println("Soft delete failed for user: " + userName);
                 }
-                break;
+                try {
+                    userService.updateUser(userProfile);
+                } catch (NotFoundException | SystemBusyException | BadRequestException e) {
+                    // Handle exceptions if necessary
+                    e.printStackTrace();
+                }
             case 2:
-                HardDelete.hardDeleteUser(userName);
-
-                // Check if the username has been deleted
-                if (HardDelete.isUsernameDeleted(userName)) {
-                    System.out.println("User data has been hard-deleted.");
-                } else
-                    System.out.printf("ERROR!!!!");
+                if (userProfile != null) {
+                    if (!SoftDelete.isUsernameDeleted(userName)) {
+                        DeletionStrategy hardDeleteStrategy = new HardDelete();
+                        hardDeleteStrategy.delete(userName, userProfile);
+                        System.out.println("User has been hard-deleted.");
+                    } else {
+                        System.out.println("User data has already been soft-deleted. Cannot perform hard delete.");
+                    }
+                } else {
+                    System.out.println("User does not exist.");
+                }
                 break;
             case 3:
-                List<UserActivity> userActivities = userActivityService.getUserActivity(userName);
-                List<Post> userPosts = postService.getPosts(userName);
-                List<Transaction> userTransactions = paymentService.getTransactions(userName);
+                try {
+                    IPDFExporter userProfileExporter = exporterFactory.createExporter("UserProfile");
 
-                ExportUserProfile pdfExporterUserProfile = new ExportUserProfile();
-                pdfExporterUserProfile.exportUserProfileToPDF(userProfile, outputPath);
+                IPDFExporter userActivityExporter = exporterFactory.createExporter("UserActivity");
+                IPDFExporter userPostsExporter = exporterFactory.createExporter("UserPosts");
+               IPDFExporter userPaymentsExporter = exporterFactory.createExporter("UserPayments");
 
-                PDFExporterActivity pdfExporterActivity = new PDFExporterActivity();
-                pdfExporterActivity.exportUserProfileAndActivitiesToPDF(userProfile, userActivities, outputPath);
-
-                ExportUserPosts exportUserPosts = new ExportUserPosts();
-                exportUserPosts.exportUserPostsToPDF(userName, userPosts, outputPath);
-
-                ExportUserPayments exportUserPayments = new ExportUserPayments();
-                exportUserPayments.exportUserPaymentsToPDF(userName, userTransactions, outputPath);
+                userProfileExporter.exportToPDF(userProfile, userActivities, userPosts, userTransactions, outputPath);
+                userActivityExporter.exportToPDF(userProfile, userActivities, userPosts, userTransactions, outputPath);
+                userPostsExporter.exportToPDF(userProfile, userActivities, userPosts, userTransactions, outputPath);
+                userPaymentsExporter.exportToPDF(userProfile, userActivities, userPosts, userTransactions, outputPath);
+                } catch (Exception e) {
+                    System.out.println("System is busy. Please try again later.");
+                    // Handle the exception or inform the user appropriately
+                }
 
                 break;
             case 4:
+
                 PDFZipCreator zipCreator = new PDFZipCreator();
                 zipCreator.createZipFile(userName, outputPath);
+
                 break;
             case 5:
                 // Exit the application
