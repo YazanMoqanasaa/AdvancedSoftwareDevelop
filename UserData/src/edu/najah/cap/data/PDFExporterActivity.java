@@ -18,7 +18,7 @@ public class PDFExporterActivity {
         Document document = new Document();
 
         try {
-            PdfWriter.getInstance(document, new FileOutputStream(outputPath + File.separator + userProfile.getUserName() + "_profile.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream(outputPath + File.separator + userProfile.getUserName() + "_Activity.pdf"));
             document.open();
 
             // User Profile Information

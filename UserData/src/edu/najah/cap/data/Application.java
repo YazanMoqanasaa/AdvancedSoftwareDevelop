@@ -42,41 +42,75 @@ public class Application {
         setLoginUserName(userName);
         //TODO Your application starts here. Do not Change the existing code
         String outputPath = "C:\\Users\\Yazan\\Desktop\\UserData\\ExportPDF";
+        //****************************
 
 
 
-        // existing code...
-        try {
-            UserProfile userProfile = userService.getUser(userName);
+        System.out.println("Choose an action:");
+        System.out.println("1. Soft Delete User");
+        System.out.println("2. Hard Delete User");
+        System.out.println("3. Export User Data");
+        System.out.println("4. Convert a zip file");
+        System.out.println("5. Exit");
 
+        int choice = scanner.nextInt();
+        UserProfile userProfile = userService.getUser(userName);
 
-           ExportUserProfile pdfExporterUserProfile = new ExportUserProfile();
-            pdfExporterUserProfile.exportUserProfileToPDF(userProfile, outputPath);
-            // Retrieve user activities if the user exists
-            List<UserActivity> userActivities = userActivityService.getUserActivity(userName);
+        switch (choice) {
+            case 1:
+                SoftDelete.softDeleteUser(userName);
 
-            // Export user profile and activities to PDF
-            PDFExporterActivity pdfExporter = new PDFExporterActivity();
-            pdfExporter.exportUserProfileAndActivitiesToPDF(userProfile, userActivities,outputPath);
+                // Check if the username has been deleted
+                if (SoftDelete.isUsernameDeleted(userName)) {
+                    System.out.println("User data has been soft-deleted.");
 
-            // Retrieve user posts if the user exists
-            List<Post> userPosts = postService.getPosts(userName);
+                    // Export user profile before deletion
+                    SoftDelete.exportUserProfileToPDF(userProfile);
+                } else {
+                    System.out.println("Soft delete failed for user: " + userName);
+                }
+                break;
+            case 2:
+                HardDelete.hardDeleteUser(userName);
 
-            // Export user posts to PDF
-            ExportUserPosts exportUserPosts = new ExportUserPosts();
-            exportUserPosts.exportUserPostsToPDF(userName, userPosts,outputPath);
+                // Check if the username has been deleted
+                if (HardDelete.isUsernameDeleted(userName)) {
+                    System.out.println("User data has been hard-deleted.");
+                } else
+                    System.out.printf("ERROR!!!!");
+                break;
+            case 3:
+                List<UserActivity> userActivities = userActivityService.getUserActivity(userName);
+                List<Post> userPosts = postService.getPosts(userName);
+                List<Transaction> userTransactions = paymentService.getTransactions(userName);
 
-            // Retrieve user payments if the user exists
-            List<Transaction> userTransactions = paymentService.getTransactions(userName);
+                ExportUserProfile pdfExporterUserProfile = new ExportUserProfile();
+                pdfExporterUserProfile.exportUserProfileToPDF(userProfile, outputPath);
 
-            // Export user payments to PDF
-            ExportUserPayments exportUserPayments = new ExportUserPayments();
-            exportUserPayments.exportUserPaymentsToPDF(userName, userTransactions,outputPath);
+                PDFExporterActivity pdfExporterActivity = new PDFExporterActivity();
+                pdfExporterActivity.exportUserProfileAndActivitiesToPDF(userProfile, userActivities, outputPath);
 
-           
-        } catch (NotFoundException e) {
-            System.err.println("User not found. Please enter a valid username.");
+                ExportUserPosts exportUserPosts = new ExportUserPosts();
+                exportUserPosts.exportUserPostsToPDF(userName, userPosts, outputPath);
+
+                ExportUserPayments exportUserPayments = new ExportUserPayments();
+                exportUserPayments.exportUserPaymentsToPDF(userName, userTransactions, outputPath);
+
+                break;
+            case 4:
+                PDFZipCreator zipCreator = new PDFZipCreator();
+                zipCreator.createZipFile(userName, outputPath);
+                break;
+            case 5:
+                // Exit the application
+                System.out.println("Exiting the application.");
+                System.exit(0);
+                break;
+            default:
+                System.out.println("Invalid choice. Please enter a valid option.");
+                break;
         }
+
 
 
         //TODO Your application ends here. Do not Change the existing code
