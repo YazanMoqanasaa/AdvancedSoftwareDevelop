@@ -22,6 +22,7 @@ import edu.najah.cap.payment.Transaction;
 import edu.najah.cap.posts.IPostService;
 import edu.najah.cap.posts.Post;
 import edu.najah.cap.posts.PostService;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Application {
+    private static Logger logger = Logger.getLogger(Application.class);
 
     private static final IUserActivityService userActivityService = new UserActivityService();
     private static final IPayment paymentService = new PaymentService();
@@ -50,12 +52,20 @@ public class Application {
         String outputPath = "C:\\Users\\Yazan\\Desktop\\UserData\\ExportPDF";
         //****************************
 
+<<<<<<< HEAD
         System.out.println("Choose an action:");
         System.out.println("1. Soft Delete User");
         System.out.println("2. Hard Delete User");
         System.out.println("3. Export User Data");
         System.out.println("4. Convert a zip file");
         System.out.println("5. Exit");
+=======
+        logger.info("dfdfdf");
+        System.out.println("abood ghanayem");
+
+
+
+>>>>>>> 147bee9d8f9a0543edb31c7a856ee292c3c0606d
 
         int choice = scanner.nextInt();
         UserProfile userProfile = userService.getUser(userName);
