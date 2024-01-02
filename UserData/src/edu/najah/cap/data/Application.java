@@ -17,12 +17,14 @@ import edu.najah.cap.payment.Transaction;
 import edu.najah.cap.posts.IPostService;
 import edu.najah.cap.posts.Post;
 import edu.najah.cap.posts.PostService;
+import org.apache.log4j.Logger;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.Scanner;
 
 public class Application {
+    private static Logger logger = Logger.getLogger(Application.class);
 
     private static final IUserActivityService userActivityService = new UserActivityService();
     private static final IPayment paymentService = new PaymentService();
@@ -42,6 +44,11 @@ public class Application {
         setLoginUserName(userName);
         //TODO Your application starts here. Do not Change the existing code
         String outputPath = "C:\\Users\\abood ghanayem\\Desktop\\all\\scivuty\\AdvancedSoftwareDevelop-working_space\\ExportPDF";
+
+        logger.info("dfdfdf");
+        System.out.println("abood ghanayem");
+
+
 
 
 
