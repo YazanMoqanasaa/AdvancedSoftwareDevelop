@@ -20,7 +20,7 @@ System flexibility: Implementing the plant design pattern and ensuring individua
 
 System Availability: The strategy design pattern separates deletion logic into its own classes, preserving responsibilities and allowing optimized file operations. Asynchronous tasks for large-scale deletions can further enhance availability and responsiveness.
 
-System Performance: A unified workflow for template design style and customization options prioritizes system availability and performance. Comprehensive logger integration contributes to accountability, flexibility, and scalability, further improving system performance.
+System Performance: A unified workflow for template design style and customization options prioritizes system availability and performance. Comprehensive logger integration contributes to accountability,  scalability, further improving system performance.
 
 System scalability: The system is made such that it can effectively handle the load, such as processing and storage, without affecting the system performance. Use Factory design pattern with StorageType encapsulation. Easily expand to new storage types, which enhances flexibility and scalability. The abstract factory method ensures the ability to adapt to future changes, which enhances scalability.
 
