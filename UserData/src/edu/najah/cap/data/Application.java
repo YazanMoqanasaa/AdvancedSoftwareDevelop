@@ -9,6 +9,7 @@ import edu.najah.cap.data.Deletion.SoftDelete;
 import edu.najah.cap.data.Export.IPDFExporter;
 import edu.najah.cap.data.Export.PDFExporterFactory;
 import edu.najah.cap.data.PDFCreateZIP.PDFZipCreator;
+import edu.najah.cap.data.UploadFile.UploadToDrive;
 import edu.najah.cap.exceptions.BadRequestException;
 import edu.najah.cap.exceptions.NotFoundException;
 import edu.najah.cap.exceptions.SystemBusyException;
@@ -135,6 +136,22 @@ public class Application {
                     System.out.println("Invalid choice. Please enter a valid option.");
                     break;
             }
+
+        // Upload To Drive
+//        String serviceAccountJsonPath = "G:\\My Drive\\AdvancedSoftwareDevelop\\UserData\\src\\edu\\najah\\cap\\data\\UploadFile\\client.json";
+//        // Get an instance of GoogleDriveService using the Singleton pattern
+//        UploadToDrive driveService = UploadToDrive.getInstance(serviceAccountJsonPath);
+//        String filePath = "G:\\My Drive\\AdvancedSoftwareDevelop\\ExportPDF\\user88_Activity.pdf";
+//        String fileName = "user88_Activity.pdf";
+//        String parentFolderId = "1";
+//
+//        // Upload the file
+//        String fileId = driveService.uploadFile(filePath, fileName, parentFolderId);
+//        if (fileId != null) {
+//            System.out.println("File ID: " + fileId);
+//        } else {
+//            System.out.println("File upload failed.");
+//        }
 
         //TODO Your application ends here. Do not Change the existing code
     Instant end = Instant.now();
