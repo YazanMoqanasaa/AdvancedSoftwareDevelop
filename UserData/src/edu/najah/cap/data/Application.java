@@ -8,6 +8,7 @@ import edu.najah.cap.data.Deletion.HardDelete;
 import edu.najah.cap.data.Deletion.SoftDelete;
 import edu.najah.cap.data.Export.IPDFExporter;
 import edu.najah.cap.data.Export.PDFExporterFactory;
+import edu.najah.cap.data.PDFCreateZIP.PDFZipCreator;
 import edu.najah.cap.exceptions.BadRequestException;
 import edu.najah.cap.exceptions.NotFoundException;
 import edu.najah.cap.exceptions.SystemBusyException;
@@ -22,7 +23,6 @@ import edu.najah.cap.payment.Transaction;
 import edu.najah.cap.posts.IPostService;
 import edu.najah.cap.posts.Post;
 import edu.najah.cap.posts.PostService;
-import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Application {
-    private static Logger logger = Logger.getLogger(Application.class);
 
     private static final IUserActivityService userActivityService = new UserActivityService();
     private static final IPayment paymentService = new PaymentService();
@@ -52,92 +51,90 @@ public class Application {
         String outputPath = "C:\\Users\\Yazan\\Desktop\\UserData\\ExportPDF";
         //****************************
 
-<<<<<<< HEAD
         System.out.println("Choose an action:");
         System.out.println("1. Soft Delete User");
         System.out.println("2. Hard Delete User");
         System.out.println("3. Export User Data");
         System.out.println("4. Convert a zip file");
         System.out.println("5. Exit");
-=======
-        logger.info("dfdfdf");
-        System.out.println("abood ghanayem");
-
-
-
->>>>>>> 147bee9d8f9a0543edb31c7a856ee292c3c0606d
 
         int choice = scanner.nextInt();
         UserProfile userProfile = userService.getUser(userName);
         List<UserActivity> userActivities = userActivityService.getUserActivity(userName);
         List<Post> userPosts = postService.getPosts(userName);
         List<Transaction> userTransactions = paymentService.getTransactions(userName);
-
+        PDFZipCreator pdfZipCreator = PDFZipCreator.getInstance();
         PDFExporterFactory exporterFactory = new PDFExporterFactory();
+       /* upload file by DropBox
 
-        switch (choice) {
-            case 1:
-                if (userProfile != null && !SoftDelete.isUsernameDeleted(userName)) {
-                    DeletionStrategy softDeleteStrategy = new SoftDelete();
-                    softDeleteStrategy.delete(userName, userProfile);
-                    SoftDelete.exportUserProfileToPDF(userProfile); // Export user profile before deletion
-                } else {
-                    System.out.println("Soft delete failed for user: " + userName);
-                }
-                try {
-                    userService.updateUser(userProfile);
-                } catch (NotFoundException | SystemBusyException | BadRequestException e) {
-                    // Handle exceptions if necessary
-                    e.printStackTrace();
-                }
-            case 2:
-                if (userProfile != null) {
-                    if (!SoftDelete.isUsernameDeleted(userName)) {
-                        DeletionStrategy hardDeleteStrategy = new HardDelete();
-                        hardDeleteStrategy.delete(userName, userProfile);
-                        System.out.println("User has been hard-deleted.");
+        String filePath = "path/to/your/file.txt";
+        String destinationPath = "destination/folder/yourfile.txt";
+
+       //FileStorageService fileStorageService = new DropboxFileStorage(); // Create an instance
+
+
+            fileStorageService.uploadFile(filePath, destinationPath); // Perform file upload
+            System.out.println("File uploaded successfully to Dropbox!");
+        */
+
+            switch (choice) {
+                case 1:
+                    if (userProfile != null && !SoftDelete.isUsernameDeleted(userName)) {
+                        DeletionStrategy softDeleteStrategy = new SoftDelete();
+                        softDeleteStrategy.delete(userName, userProfile);
+                        SoftDelete.exportUserProfileToPDF(userProfile); // Export user profile before deletion
                     } else {
-                        System.out.println("User data has already been soft-deleted. Cannot perform hard delete.");
+                        System.out.println("Soft delete failed for user: " + userName);
                     }
-                } else {
-                    System.out.println("User does not exist.");
-                }
-                break;
-            case 3:
-                try {
-                    IPDFExporter userProfileExporter = exporterFactory.createExporter("UserProfile");
+                    try {
+                        userService.updateUser(userProfile);
+                    } catch (NotFoundException | SystemBusyException | BadRequestException e) {
+                        // Handle exceptions if necessary
+                        e.printStackTrace();
+                    }
+                    break;
+                case 2:
+                    if (userProfile != null) {
+                        if (!SoftDelete.isUsernameDeleted(userName)) {
+                            DeletionStrategy hardDeleteStrategy = new HardDelete();
+                            hardDeleteStrategy.delete(userName, userProfile);
+                            System.out.println("User has been hard-deleted.");
+                        } else {
+                            System.out.println("User data has already been soft-deleted. Cannot perform hard delete.");
+                        }
+                    } else {
+                        System.out.println("User does not exist.");
+                    }
+                    break;
+                case 3:
+                    try {
+                        IPDFExporter userProfileExporter = exporterFactory.createExporter("UserProfile");
+                        IPDFExporter userActivityExporter = exporterFactory.createExporter("UserActivity");
+                        IPDFExporter userPostsExporter = exporterFactory.createExporter("UserPosts");
+                        IPDFExporter userPaymentsExporter = exporterFactory.createExporter("UserPayments");
 
-                IPDFExporter userActivityExporter = exporterFactory.createExporter("UserActivity");
-                IPDFExporter userPostsExporter = exporterFactory.createExporter("UserPosts");
-               IPDFExporter userPaymentsExporter = exporterFactory.createExporter("UserPayments");
+                        userProfileExporter.exportToPDF(userProfile, userActivities, userPosts, userTransactions, outputPath);
+                        userActivityExporter.exportToPDF(userProfile, userActivities, userPosts, userTransactions, outputPath);
+                        userPostsExporter.exportToPDF(userProfile, userActivities, userPosts, userTransactions, outputPath);
+                        userPaymentsExporter.exportToPDF(userProfile, userActivities, userPosts, userTransactions, outputPath);
+                    } catch (Exception e) {
+                        System.out.println("An unexpected error occurred.");
+                    }
 
-                userProfileExporter.exportToPDF(userProfile, userActivities, userPosts, userTransactions, outputPath);
-                userActivityExporter.exportToPDF(userProfile, userActivities, userPosts, userTransactions, outputPath);
-                userPostsExporter.exportToPDF(userProfile, userActivities, userPosts, userTransactions, outputPath);
-                userPaymentsExporter.exportToPDF(userProfile, userActivities, userPosts, userTransactions, outputPath);
-                } catch (Exception e) {
-                    System.out.println("System is busy. Please try again later.");
-                    // Handle the exception or inform the user appropriately
-                }
+                    break;
+                case 4:
 
-                break;
-            case 4:
-
-                PDFZipCreator zipCreator = new PDFZipCreator();
-                zipCreator.createZipFile(userName, outputPath);
-
-                break;
-            case 5:
-                // Exit the application
-                System.out.println("Exiting the application.");
-                System.exit(0);
-                break;
-            default:
-                System.out.println("Invalid choice. Please enter a valid option.");
-                break;
-        }
-
-
+                    pdfZipCreator.createZipFile(userName, outputPath);
+                    break;
+                case 5:
+                    // Exit the application
+                    System.out.println("Exiting the application.");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+                    break;
+            }
 
         //TODO Your application ends here. Do not Change the existing code
     Instant end = Instant.now();

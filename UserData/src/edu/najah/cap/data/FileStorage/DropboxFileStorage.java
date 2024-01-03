@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-class DropboxFileStorageException extends Exception {
+class DropboxFileStorage extends Exception {
     public DropboxFileStorageException(String message, Throwable cause) {
         super(message, cause);
     }

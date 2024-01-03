@@ -4,7 +4,6 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
-import edu.najah.cap.iam.IUserService;
 import edu.najah.cap.iam.UserProfile;
 import edu.najah.cap.iam.UserType;
 
@@ -17,10 +16,26 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.FileTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
-public class SoftDelete implements DeletionStrategy{
-    static IUserService s;
+public class SoftDelete implements DeletionStrategy {
     private static final Set<String> deletedUsernames = new HashSet<>();
+    private static final Logger logger = Logger.getLogger(SoftDelete.class.getName());
+    static {
+        try {
+            // Create a file handler to direct logs to the specified file path
+            FileHandler fileHandler = new FileHandler("C:\\Users\\Yazan\\Desktop\\UserData\\Logger\\soft_delete_log_file.log", true);
+            SimpleFormatter formatter = new SimpleFormatter();
+            fileHandler.setFormatter(formatter);
+            logger.addHandler(fileHandler);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void delete(String userName, UserProfile userProfile) {
@@ -30,6 +45,7 @@ public class SoftDelete implements DeletionStrategy{
             exportUserProfileToPDF(userProfile);
         }
     }
+
     private static void clearSensitiveInfo(UserProfile userProfile) {
         userProfile.setFirstName("");
         userProfile.setLastName("");
@@ -44,14 +60,11 @@ public class SoftDelete implements DeletionStrategy{
         userProfile.setPostalCode("");
         userProfile.setBuilding("");
         userProfile.setUserType(UserType.NEW_USER);
-
     }
-
 
     public static boolean isUsernameDeleted(String userName) {
         return deletedUsernames.contains(userName);
     }
-
 
     public static void exportUserProfileToPDF(UserProfile userProfile) {
         String outputPath = "C:\\Users\\Yazan\\Desktop\\UserData\\Soft&HardDelete";
@@ -76,12 +89,13 @@ public class SoftDelete implements DeletionStrategy{
                 Path path = Paths.get(filePath);
                 FileTime lastModifiedTime = Files.getLastModifiedTime(path);
                 System.out.println("File exists and was last modified on: " + lastModifiedTime);
+                logger.info("File exists and was last modified on : " + path.getFileName());
             } else {
                 System.out.println("File does not exist. Created a new file.");
             }
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
+            logger.log(Level.SEVERE, "Exception occurred during PDF export", e);
         }
     }
-
 }

@@ -1,0 +1,64 @@
+Jan 02, 2024 10:18:16 PM edu.najah.cap.data.Export.PDFExporterFactory createExporter
+INFO: Creating UserProfilePDFExporter
+Jan 02, 2024 10:18:16 PM edu.najah.cap.data.Export.PDFExporterFactory createExporter
+INFO: Creating PDFExporterActivity
+Jan 02, 2024 10:18:16 PM edu.najah.cap.data.Export.PDFExporterFactory createExporter
+INFO: Creating ExportUserPosts
+Jan 02, 2024 10:18:16 PM edu.najah.cap.data.Export.PDFExporterFactory createExporter
+INFO: Creating ExportUserPayments
+Jan 02, 2024 10:18:19 PM edu.najah.cap.data.Export.UserProfilePDFExporter exportToPDF
+INFO: File created: C:\Users\Yazan\Desktop\UserData\ExportPDF\user54_profile.pdf
+Jan 02, 2024 10:18:20 PM edu.najah.cap.data.Export.PDFExporterActivity exportToPDF
+INFO: File created: C:\Users\Yazan\Desktop\UserData\ExportPDF\user54_Activity.pdf
+Jan 02, 2024 10:18:20 PM edu.najah.cap.data.Export.ExportUserPosts exportToPDF
+INFO: File created: C:\Users\Yazan\Desktop\UserData\ExportPDF\user54_posts.pdf
+Jan 02, 2024 10:18:20 PM edu.najah.cap.data.Export.ExportUserPayments exportToPDF
+INFO: File created: C:\Users\Yazan\Desktop\UserData\ExportPDF\user54_payments.pdf
+Jan 02, 2024 10:19:08 PM edu.najah.cap.data.Export.PDFExporterFactory createExporter
+INFO: Creating UserProfilePDFExporter
+Jan 02, 2024 10:19:08 PM edu.najah.cap.data.Export.PDFExporterFactory createExporter
+INFO: Creating PDFExporterActivity
+Jan 02, 2024 10:19:08 PM edu.najah.cap.data.Export.PDFExporterFactory createExporter
+INFO: Creating ExportUserPosts
+Jan 02, 2024 10:19:08 PM edu.najah.cap.data.Export.PDFExporterFactory createExporter
+INFO: Creating ExportUserPayments
+Jan 02, 2024 10:19:10 PM edu.najah.cap.data.Export.UserProfilePDFExporter exportToPDF
+INFO: File created: C:\Users\Yazan\Desktop\UserData\ExportPDF\user56_profile.pdf
+Jan 02, 2024 10:19:11 PM edu.najah.cap.data.Export.PDFExporterActivity exportToPDF
+INFO: File created: C:\Users\Yazan\Desktop\UserData\ExportPDF\user56_Activity.pdf
+Jan 02, 2024 10:19:11 PM edu.najah.cap.data.Export.ExportUserPosts exportToPDF
+INFO: File created: C:\Users\Yazan\Desktop\UserData\ExportPDF\user56_posts.pdf
+Jan 02, 2024 10:19:11 PM edu.najah.cap.data.Export.ExportUserPayments exportToPDF
+INFO: File created: C:\Users\Yazan\Desktop\UserData\ExportPDF\user56_payments.pdf
+Jan 03, 2024 12:00:17 AM edu.najah.cap.data.Export.PDFExporterFactory createExporter
+INFO: Creating UserProfilePDFExporter
+Jan 03, 2024 12:00:18 AM edu.najah.cap.data.Export.PDFExporterFactory createExporter
+INFO: Creating PDFExporterActivity
+Jan 03, 2024 12:00:18 AM edu.najah.cap.data.Export.PDFExporterFactory createExporter
+INFO: Creating ExportUserPosts
+Jan 03, 2024 12:00:18 AM edu.najah.cap.data.Export.PDFExporterFactory createExporter
+INFO: Creating ExportUserPayments
+Jan 03, 2024 12:00:20 AM edu.najah.cap.data.Export.UserProfilePDFExporter exportToPDF
+INFO: File created: C:\Users\Yazan\Desktop\UserData\ExportPDF\user15_profile.pdf
+Jan 03, 2024 12:00:20 AM edu.najah.cap.data.Export.PDFExporterActivity exportToPDF
+INFO: File created: C:\Users\Yazan\Desktop\UserData\ExportPDF\user15_Activity.pdf
+Jan 03, 2024 12:00:21 AM edu.najah.cap.data.Export.ExportUserPosts exportToPDF
+INFO: File created: C:\Users\Yazan\Desktop\UserData\ExportPDF\user15_posts.pdf
+Jan 03, 2024 12:00:21 AM edu.najah.cap.data.Export.ExportUserPayments exportToPDF
+INFO: File created: C:\Users\Yazan\Desktop\UserData\ExportPDF\user15_payments.pdf
+Jan 03, 2024 12:25:01 AM edu.najah.cap.data.Export.PDFExporterFactory createExporter
+INFO: Creating UserProfilePDFExporter
+Jan 03, 2024 12:25:01 AM edu.najah.cap.data.Export.PDFExporterFactory createExporter
+INFO: Creating PDFExporterActivity
+Jan 03, 2024 12:25:01 AM edu.najah.cap.data.Export.PDFExporterFactory createExporter
+INFO: Creating ExportUserPosts
+Jan 03, 2024 12:25:01 AM edu.najah.cap.data.Export.PDFExporterFactory createExporter
+INFO: Creating ExportUserPayments
+Jan 03, 2024 12:25:03 AM edu.najah.cap.data.Export.UserProfilePDFExporter exportToPDF
+INFO: File created: C:\Users\Yazan\Desktop\UserData\ExportPDF\user15_profile.pdf
+Jan 03, 2024 12:25:03 AM edu.najah.cap.data.Export.PDFExporterActivity exportToPDF
+INFO: File created: C:\Users\Yazan\Desktop\UserData\ExportPDF\user15_Activity.pdf
+Jan 03, 2024 12:25:04 AM edu.najah.cap.data.Export.ExportUserPosts exportToPDF
+INFO: File created: C:\Users\Yazan\Desktop\UserData\ExportPDF\user15_posts.pdf
+Jan 03, 2024 12:25:04 AM edu.najah.cap.data.Export.ExportUserPayments exportToPDF
+INFO: File created: C:\Users\Yazan\Desktop\UserData\ExportPDF\user15_payments.pdf
