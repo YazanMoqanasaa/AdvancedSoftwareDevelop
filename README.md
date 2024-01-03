@@ -24,4 +24,5 @@ System Performance: A unified workflow for template design style and customizati
 
 System scalability: The system is made such that it can effectively handle the load, such as processing and storage, without affecting the system performance. Use Factory design pattern with StorageType encapsulation. Easily expand to new storage types, which enhances flexibility and scalability. The abstract factory method ensures the ability to adapt to future changes, which enhances scalability.
 
+# thank you for listening. I hope I live up to your expectations. I hope that the result will be excellent, because I am very tired of this, and I need grades in order for us to succeed.
 final project
