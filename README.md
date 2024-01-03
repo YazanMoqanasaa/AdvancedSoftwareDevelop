@@ -11,4 +11,17 @@ We used the factory design pattern in order to achieve the principle of individu
 
 We used the template design pattern by defining the PDFZipTemplate with abstract methods for specific file operations, ensuring a uniform workflow while allowing customization, thus fulfilling the dependency inversion principle. Each interface contains only the functionality that is desired, thus ensuring scalability, flexibility, and accountability by encapsulating File processing logic. Additionally, it prioritizes system availability and performance. An integrated logger enhances system accountability by recording actions, enhances system availability by tracking errors, and contributes to system flexibility and scalability.
 
+
+# Non functional requirements
+
+System Accountability: Code takes responsibility by handling and logging exceptions, ensuring system availability and monitoring performance. Comprehensive logging of operations, including deletions, promotes clear system accountability.
+
+System flexibility: Implementing the plant design pattern and ensuring individual responsibility allows new information to be easily incorporated, ensuring adherence to the principles of open-closed substitution and Leskov substitution. Using a custom logger class improves flexibility while improving scalability.
+
+System Availability: The strategy design pattern separates deletion logic into its own classes, preserving responsibilities and allowing optimized file operations. Asynchronous tasks for large-scale deletions can further enhance availability and responsiveness.
+
+System Performance: A unified workflow for template design style and customization options prioritizes system availability and performance. Comprehensive logger integration contributes to accountability, flexibility, and scalability, further improving system performance.
+
+System scalability: The system is made such that it can effectively handle the load, such as processing and storage, without affecting the system performance. Use Factory design pattern with StorageType encapsulation. Easily expand to new storage types, which enhances flexibility and scalability. The abstract factory method ensures the ability to adapt to future changes, which enhances scalability.
+
 final project
