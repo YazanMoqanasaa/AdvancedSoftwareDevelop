@@ -1,6 +1,6 @@
 # AdvancedSoftwareDevelop
 
-# Hello dear Dr. Mustafa
+# Hello
 
 We used the Factory design pattern to create different types of file storage services based on StorageType. Since it encapsulates DropboxFileStorage and GoogleDriveFileStorage separately, this design allows for easy extension of new storage types, which creates flexibility and thus leads to scalability by adopting a more abstract factory method for creating The service, which ensures ease of changing it in the future. The responsibility of the code lies in handling and recording specific exceptions, which contributes to system availability and performance monitoring, to further improve the scalability of the system. We also worked on using Apache Log4j in Logging to record all procedures in the system, knowing We spent 4 days learning and trying to run it (uploading to storage locations) from all team members, but from the experience gained from learning, this code was written with excellent logic according to the needs of functional requirements and non-functional requirements.
 
